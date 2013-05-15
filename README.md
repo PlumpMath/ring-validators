@@ -20,7 +20,7 @@ Available from [Clojars](https://clojars.org/ring-validators)
 ((param-int? :foo) {:params {:foo "123"}}) ; => true
 ```
 
-Pretty boring, but these can then be attached to ring handler
+Pretty boring, but these can then be attached to Ring handler
 functions...
 
 ```clojure
@@ -31,7 +31,7 @@ functions...
 (with-validations 
   #'my-handler
   (param-exists? :foo) "You need to specify a foo"
-  (param-int? :bar) "Bar needs to be an integer
+  (param-int? :bar) "Bar needs to be an integer"
   :on-error
     (fn [message e & args]
       ;; create error response
