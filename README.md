@@ -12,8 +12,33 @@ Available from [Clojars](https://clojars.org/ring-validators)
 (ns my.project
   (:require [ring.util.validators :refer :all]))
 
-(param-exists? :foo {:params {}}) ; => false
+; The functions return validators, so we need to create
+; them and then execute them.
 
-(param-int? :foo {:params {:foo "123"}}) ; => true
+((param-exists? :foo) {:params {}}) ; => false
+
+((param-int? :foo) {:params {:foo "123"}}) ; => true
 ```
+
+Pretty boring, but these can then be attached to ring handler
+functions...
+
+```clojure
+(defn my-handler [req]
+  ;; does something incredible, of course
+  )
+
+(with-validations 
+  #'my-handler
+  (param-exists? :foo) "You need to specify a foo"
+  (param-int? :bar) "Bar needs to be an integer
+  :on-error
+    (fn [message e & args]
+      ;; create error response
+      ))
+```
+
+## Disclaimer
+
+Just playing with some ideas, might not work out in practice.
 
