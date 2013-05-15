@@ -15,5 +15,10 @@
 (defn param-int?
   "Validates a parameter is an integer"
   [param req]
-  (integer? (value param req)))
+  (boolean
+    (try
+      (let [v (value param req)]
+        (or (integer? v)
+            (Integer/parseInt v)))
+      (catch Exception e))))
 

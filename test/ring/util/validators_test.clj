@@ -9,6 +9,7 @@
 
 (deftest parameter-is-an-integer
   (is (param-int? :foo {:params {:foo 123}}))
-  (is (not (param-int? :foo {:params {:foo "123"}})))
+  (is (param-int? :foo {:params {:foo "123"}}))
+  (is (not (param-int? :foo {:params {:foo "abc"}})))
   (is (not (param-int? :foo {:params {}}))))
 

@@ -4,5 +4,16 @@
 Small library of functions which can be used to validate
 [Ring](https://github.com/ring-clojure/ring) requests.
 
-Currently a work in progress, being tested with another tool.
+## Usage
+
+Available from [Clojars](https://clojars.org/ring-validators)
+
+```clojure
+(ns my.project
+  (:require [ring.util.validators :refer :all]))
+
+(param-exists? :foo {:params {}}) ; => false
+
+(param-int? :foo {:params {:foo "123"}}) ; => true
+```
 
