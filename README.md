@@ -38,6 +38,14 @@ functions...
       ))
 ```
 
+## Validators
+
+```clojure
+(param-exists? :name)
+(param-int? :name)
+(param-long? :name)
+```
+
 ## Disclaimer
 
 Just playing with some ideas, might not work out in practice.
