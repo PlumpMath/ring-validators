@@ -2,8 +2,17 @@
 (ns ring.util.validators
   (:require [dire.core :refer [with-precondition! with-handler!]]))
 
-(defn- value [param req]
+(defn- param-value [param req]
   (get-in req [:params param] ""))
+
+(defmacro defparser [func doc & body]
+  `(defn ~func [param#]
+     (fn [req#]
+       (boolean
+         (try
+           (let [~'value (str (param-value param# req#))]
+             (do ~@body))
+           (catch Exception e#))))))
 
 ;; Public
 ;; ------
@@ -29,16 +38,13 @@
   "Validates a parameter exists and is not blank"
   [param]
   (fn [req]
-    (> (count (value param req)) 0)))
+    (> (count (param-value param req)) 0)))
 
-(defn param-int?
-  "Validates a parameter is an integer"
-  [param]
-  (fn [req]
-    (boolean
-      (try
-        (let [v (value param req)]
-          (or (integer? v)
-              (Integer/parseInt v)))
-        (catch Exception e)))))
+(defparser param-int?
+  "Validates a parameter is a valid integer"
+  (Integer/parseInt value))
+
+(defparser param-long?
+  "Validates a parameter is a valid long"
+  (Long/parseLong value))
 

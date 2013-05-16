@@ -13,5 +13,11 @@
   (is (not ((param-int? :foo) {:params {:foo "abc"}})))
   (is (not ((param-int? :foo) {:params {}}))))
 
-(run-tests)
+(deftest parameter-is-a-long
+  (is ((param-long? :foo) {:params {:foo 17592186045509}}))
+  (is ((param-long? :foo) {:params {:foo "17592186045509"}}))
+  (is (not ((param-long? :foo) {:params {:foo "asdasdasd"}})))
+  (is (not ((param-long? :foo) {:params {}}))))
+
+;(run-tests)
 
